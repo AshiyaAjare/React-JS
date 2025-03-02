@@ -1,26 +1,30 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  
-
   return (
-    <div className="bg-white shadow-md z-10 py-2">
-      <div className="w-screen mx-auto max-w-[100%] px-2 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-full gap-10">
-          <p className="text-2xl font-bold text-green-900">
+    <div className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 shadow-md z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
+        <div className="flex justify-between items-center">
+          <Link to="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-400">
             LinkUp
-          </p>
-          <div>
-            <Link to="/" className="text-medium text-green-900 px-4  py-2 font-bold">Home</Link>
-            <Link to="/" className="text-medium text-green-900 px-4  py-2 font-bold ml-4">Help</Link>
-            <Link to="/" className="text-medium text-green-900 px-4  py-2 font-bold ml-4">Contact Us</Link>
+          </Link>
+          
+          <div className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-gray-700 hover:text-indigo-500 font-medium transition duration-300">Home</Link>
+            <Link to="/help" className="text-gray-700 hover:text-indigo-500 font-medium transition duration-300">Help</Link>
+            <Link to="/contact" className="text-gray-700 hover:text-indigo-500 font-medium transition duration-300">Contact Us</Link>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <Link to="/login" className="bg-white text-indigo-400 font-medium px-4 py-2 rounded-lg shadow-sm border border-indigo-100 hover:bg-gray-50 transition duration-300">
+              Log in
+            </Link>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
