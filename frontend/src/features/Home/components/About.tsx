@@ -22,7 +22,7 @@ const About = () => {
           </p>
           <div className="mt-10 flex gap-4">
             <Link
-              to="/login"
+              to="/dashboard"
               className="bg-indigo-400 text-white font-semibold px-8 py-3 rounded-lg shadow-md
               hover:bg-indigo-500 transform hover:-translate-y-1 transition duration-300"
             >

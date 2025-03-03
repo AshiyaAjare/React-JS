@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
             <div className="h-8 w-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center mr-2 shadow-md">
               <span className="text-white font-bold">L</span>
             </div>
-            <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LinkUp</span>
+            <Link to="/app"><span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">LinkUp</span></Link>
           </div>
           <button onClick={toggleSidebar} className="lg:hidden text-indigo-500 hover:text-purple-700">
             <X size={20} />
@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
           <p className="text-xs font-medium text-indigo-400 mb-4 px-2">MENU</p>
 
           <div className="space-y-1">
-            <a href="#" className="flex items-center text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 rounded-lg px-4 py-3 transition-colors">
+            <a className="flex items-center text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 rounded-lg px-4 py-3 transition-colors">
               <Home size={20} className="mr-3 text-indigo-400" />
               <span className="font-medium">Dashboard</span>
             </a>

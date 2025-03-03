@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
 import LoginContainer from "../features/Login/container/LoginContainer";
 import AcceptInvitation from "../features/AcceptInvite/components/AcceptInvite";
@@ -9,11 +9,31 @@ import QueryDashboard from "../features/Query/components"
 import CreateQuery from "../features/Query/components/CreateQuery";
 import ViewQuery from "../features/Query/components/ViewQuery";
 import Query from "../features/Query/components/Query";
+import Help from "../features/Home/components/Help";
+import ContactUs from "../features/Home/components/ContactUs";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App/>,
+    path: "/", // Redirect root "/" to "/login"
+    element: <Navigate to="/login" replace />,
+  },
+  {
+    path:"/help",
+    element:<Help/>
+  },
+  {
+    path:"/contact",
+    element:<ContactUs/>
+  },
+  {
+    path: "/app",
+    element: <ProtectedRoute />,
+    children:[
+      {
+        index: true,
+        element: <App/>,
+      }
+    ]
   },
   {
     path: "/login",

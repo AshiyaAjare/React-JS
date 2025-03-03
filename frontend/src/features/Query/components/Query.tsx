@@ -90,7 +90,7 @@ const Query: React.FC = () => {
               </div>
               <div className="flex-grow">
                 <h3 className="font-semibold text-lg text-gray-800 hover:text-indigo-600 transition-colors">
-                  <Link to={`/query/${query.id}`} className="hover:underline">
+                  <Link to={`/queries/${query.id}`} className="hover:underline">
                     {query.title}
                   </Link>
                 </h3>

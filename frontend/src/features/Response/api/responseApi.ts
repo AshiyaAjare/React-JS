@@ -25,7 +25,30 @@ export const responseAPI = createApi({
                 method: "PATCH",
             }),
         }),
+        createResponse: builder.mutation({
+            query: ({ queryId, responseData }) => ({
+                url: `/queries/${queryId}/responses`,
+                method: "POST",
+                body: responseData, // ✅ Correct: This should be the full response object
+            }),
+        }),
+        deleteResponse: builder.mutation({
+            query: ({ responseId }) => ({
+                url: `/responses/${responseId}`,
+                method: "DELETE",
+            })
+        }),
+        updateResponse: builder.mutation({
+            query: ({ responseId, content }) => ({
+                url: `/responses/${responseId}`,
+                method: "PUT",
+                body: {content},
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+        })
     }),
 });
 
-export const { useUpvoteResponseMutation, useDownvoteResponseMutation } = responseAPI;
+export const { useUpvoteResponseMutation, useDownvoteResponseMutation, useCreateResponseMutation, useDeleteResponseMutation, useUpdateResponseMutation } = responseAPI;

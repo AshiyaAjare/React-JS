@@ -44,7 +44,20 @@ export const queryAPI = createApi({
     getQueryById: builder.query({
       query: (queryId) => `/queries/${queryId}`,
     }),
+    deleteQueryById: builder.mutation({
+      query: (queryId) => ({
+        url:`/queries/${queryId}`,
+        method: "DELETE",
+      })
+    }),
+    updateQuery: builder.mutation({
+      query: ({queryId, content}) => ({
+        url: `/queries/${queryId}`,
+        method: "PUT",
+        body: {content}
+      })
+    })
   }),
 });
 
-export const { useGetQueriesQuery, useCreateQueryMutation, useGetQueryByIdQuery } = queryAPI;
+export const { useGetQueriesQuery, useCreateQueryMutation, useGetQueryByIdQuery, useDeleteQueryByIdMutation, useUpdateQueryMutation } = queryAPI;

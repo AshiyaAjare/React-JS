@@ -18,11 +18,18 @@ const useLogin = () => {
   ) => {
     try {
       const response = await loginUser(values).unwrap();
-      console.log('Login successful:', response);
+      console.log('API Response:', response);
+  
+      if (!response || !response.token || !response.user) {
+        throw new Error('Invalid response from API');
+      }
+  
+      // Store token and user data properly
       localStorage.setItem('token', response.token);
-      localStorage.setItem('token', response.user);
+      localStorage.setItem('user', JSON.stringify(response.user)); // Convert user object to string
+  
       dispatch(setAuth({ token: response.token, user: response.user }));
-      
+  
       toast.success("Login successful!", {
         position: "top-right",
         autoClose: 3000,
@@ -30,15 +37,15 @@ const useLogin = () => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        
       });
-
-      navigate("/dashboard");
-
+  
+      navigate("/app");
+  
     } catch (err) {
       console.error('Login failed:', err);
-      setErrors({ api: 'Invalid email or password' });
       
+      setErrors({ api: 'Invalid email or password' });
+  
       toast.error("Login failed. Invalid email or password!", {
         position: "top-right",
         autoClose: 3000,
@@ -49,6 +56,7 @@ const useLogin = () => {
       });
     }
   };
+  
 
   return { handleLogin, isLoading, error };
 };

@@ -4,7 +4,8 @@ import { StrictMode } from "react";
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import { RouterProvider } from "react-router-dom";
-import router from "./root/routes"; // Import your routes
+import router from "./root/routes";
+// import { PersistGate } from 'redux-persist/es/integration/react'
 import "./index.css";
 
 
