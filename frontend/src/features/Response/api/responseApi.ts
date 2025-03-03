@@ -47,8 +47,16 @@ export const responseAPI = createApi({
                     "Content-Type": "application/json",
                 },
             })
-        })
+        }),
+        approveResponse: builder.mutation({
+            query: (responseId: number) => ({
+              url: `/responses/${responseId}/toggle_approval`, // Correct API path
+              method: "PATCH",
+            }),
+          }),
+          
     }),
 });
 
-export const { useUpvoteResponseMutation, useDownvoteResponseMutation, useCreateResponseMutation, useDeleteResponseMutation, useUpdateResponseMutation } = responseAPI;
+export const { useUpvoteResponseMutation, useDownvoteResponseMutation, useCreateResponseMutation,
+     useDeleteResponseMutation, useUpdateResponseMutation, useApproveResponseMutation } = responseAPI;
