@@ -12,6 +12,7 @@ import Query from "../features/Query/components/Query";
 import Help from "../features/Home/components/Help";
 import ContactUs from "../features/Home/components/ContactUs";
 
+
 export const router = createBrowserRouter([
   {
     path: "/", // Redirect root "/" to "/login"
@@ -73,6 +74,7 @@ export const router = createBrowserRouter([
             path: ":queryId", // `/queries/:queryId`
             element: <ViewQuery />,
           },
+          
         ],
       },
     ],

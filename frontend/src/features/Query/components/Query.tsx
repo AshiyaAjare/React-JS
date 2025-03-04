@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import QueryLogic, { QueryData } from "../container/QueryLogic";
 
 const Query: React.FC = () => {
   console.log("Query UI component is rendering"); // Debugging
+  const [filterText, setFilterText] = useState<string>("");
 
   return (
     <QueryLogic>
@@ -19,6 +20,25 @@ const Query: React.FC = () => {
         indexOfLastQuery, 
         goToPage 
       }) => {
+        // Add tag filtering logic
+        const [selectedTag, setSelectedTag] = useState<string>(""); 
+        
+        // Extract unique tags from queries 
+        const uniqueTags = useMemo(() => { 
+          if (!data) return [];
+          const allTags = data.flatMap((query) => query.tags || []); 
+          const uniqueTagSet = new Set(allTags.map((tag) => tag.name)); 
+          return Array.from(uniqueTagSet); 
+        }, [data]);
+        
+        // Filter queries based on selected tag
+        const filteredQueries = useMemo(() => { 
+          if (!selectedTag) return currentQueries; 
+          return currentQueries.filter((query) => 
+            query.tags && query.tags.some((tag) => tag.name === selectedTag)
+          ); 
+        }, [currentQueries, selectedTag]);
+
         if (isLoading) {
           console.log("Loading state active"); // Debugging
           return (
@@ -62,19 +82,52 @@ const Query: React.FC = () => {
               </button>
             </div>
             
-            <div className="bg-gray-50 p-4 rounded-lg mb-6 flex items-center border border-gray-200">
-              <input 
-                type="text" 
-                placeholder="Filter queries..." 
-                className="flex-grow px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent"
-              />
-              <button className="ml-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors">
-                Filter
-              </button>
+            <div className="bg-gray-50 p-4 rounded-lg mb-6">
+              {/* <div className="flex items-center mb-3">
+                <input 
+                  type="text" 
+                  placeholder="Filter queries..." 
+                  className="flex-grow px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent"
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                />
+                <button className="ml-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors">
+                  Filter
+                </button>
+              </div> */}
+              
+              {/* Tag filtering section */}
+              {uniqueTags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <button
+                    className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                      selectedTag === "" 
+                        ? "bg-indigo-600 text-white" 
+                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
+                    onClick={() => setSelectedTag("")}
+                  >
+                    All
+                  </button>
+                  {uniqueTags.map((tag) => (
+                    <button
+                      key={tag}
+                      className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                        selectedTag === tag 
+                          ? "bg-indigo-600 text-white" 
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                      onClick={() => setSelectedTag(tag)}
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <ul className="space-y-3">
-              {currentQueries.map((query: QueryData) => (
+              {filteredQueries.map((query: QueryData) => (
                 <li key={query.id} className="border border-gray-200 hover:border-indigo-200 p-4 rounded-lg shadow-sm hover:shadow transition-all bg-white">
                   <div className="flex items-start">
                     <div className="p-2 bg-indigo-100 rounded-full mr-4 mt-1">
@@ -107,6 +160,20 @@ const Query: React.FC = () => {
                         {query.status ? "Closed" : "Open"}
                         </span>
                       </div>
+                      
+                      {/* Display tags if available */}
+                      {query.tags && query.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {query.tags.map((tag) => (
+                            <span 
+                              key={tag.id} 
+                              className="bg-indigo-50 text-indigo-600 text-xs px-2 py-1 rounded-full"
+                            >
+                              {tag.name}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <Link to={`/queries/${query.id}`} className="ml-4">
                       <button className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors border border-gray-200 hover:border-indigo-200">
