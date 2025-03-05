@@ -31,7 +31,7 @@ export const useQueryContainer = () => {
   
   // Track which responses the user has already voted on
   const [userVotes, setUserVotes] = useState<{[responseId: number]: 'upvote' | 'downvote' | null}>({});
-
+  
   // Initialize user votes when data is loaded
   useEffect(() => {
     if (query?.responses && loggedInUserId) {
@@ -147,20 +147,29 @@ export const useQueryContainer = () => {
 
   const canApproveResponses = loggedInUserId === query?.user.id;
 
+  const [recentlyApproved, setRecentlyApproved] = useState<number | null>(null);
+
   const handleToggleApproval = async (responseId?: number) => {
     if (!responseId) {
       console.error("Response ID is undefined, cannot make API call");
       return;
     }
-  
+
     try {
-      console.log("Toggling approval for response ID:", responseId);
-      await toggleApproval(responseId).unwrap();
+      const result = await toggleApproval(responseId).unwrap();
+      
+      // Track the recently approved response
+      if (result.approval) {
+        setRecentlyApproved(responseId);
+      } else {
+        setRecentlyApproved(null);
+      }
       refetch();
     } catch (error) {
       console.error("Error updating response status", error);
     }
   };
+
 
   return {
     queryId,

@@ -23,10 +23,9 @@ const useLogin = () => {
       if (!response || !response.token || !response.user) {
         throw new Error('Invalid response from API');
       }
-  
       // Store token and user data properly
       localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user)); // Convert user object to string
+      localStorage.setItem('user', JSON.stringify(response.user));
   
       dispatch(setAuth({ token: response.token, user: response.user }));
   

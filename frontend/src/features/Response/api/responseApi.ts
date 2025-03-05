@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Response } from "../container/types";
 
 export const responseAPI = createApi({
     reducerPath: "responseAPI",
@@ -12,6 +13,7 @@ export const responseAPI = createApi({
             return headers;
           },
     }),
+    tagTypes: ['Responses'],
     endpoints: (builder) => ({
         upvoteResponse: builder.mutation({
             query: ({ responseId }) => ({
@@ -53,10 +55,23 @@ export const responseAPI = createApi({
               url: `/responses/${responseId}/toggle_approval`, // Correct API path
               method: "PATCH",
             }),
+        }),
+        getResponses: builder.query<Response[], void>({
+            query: () => "/responses",
+            providesTags: ['Responses'],
+        }),
+        updateResponseStatus: builder.mutation<Response, { id: number, updates: Partial<Response> }>({
+            query: ({ id, updates }) => ({
+              url: `/responses/${id}`,
+              method: 'PATCH',
+              body: updates,
+            }),
+            invalidatesTags: ['Responses'],
           }),
           
     }),
 });
 
 export const { useUpvoteResponseMutation, useDownvoteResponseMutation, useCreateResponseMutation,
-     useDeleteResponseMutation, useUpdateResponseMutation, useApproveResponseMutation } = responseAPI;
+     useDeleteResponseMutation, useUpdateResponseMutation, useApproveResponseMutation,
+     useGetResponsesQuery, useUpdateResponseStatusMutation } = responseAPI;

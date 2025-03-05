@@ -66,9 +66,9 @@ const Login: React.FC<LoginProps> = ({ validationSchema, onSubmit, isLoading }) 
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <label className="text-gray-700 font-medium">Password</label>
-                      <a href="#" className="text-sm text-indigo-500 hover:text-indigo-700 transition duration-200">
+                      {/* <a href="#" className="text-sm text-indigo-500 hover:text-indigo-700 transition duration-200">
                         Forgot password?
-                      </a>
+                      </a> */}
                     </div>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

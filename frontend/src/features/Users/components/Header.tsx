@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
             <Menu size={24} />
           </button>
 
-          <div className="relative max-w-xs w-full hidden md:block">
+          {/* <div className="relative max-w-xs w-full hidden md:block">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search size={18} className="text-gray-400" />
             </div>
@@ -23,15 +23,15 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
               placeholder="Search..."
               className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
             />
-          </div>
+          </div> */}
         </div>
 
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <button className="text-gray-500 hover:text-gray-700 relative">
             <Bell size={20} />
             <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
           </button>
-        </div>
+        </div> */}
       </div>
     </header>
   );

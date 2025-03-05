@@ -128,7 +128,7 @@ const Profile: React.FC = () => {
             </div>
 
             <div className="md:flex-1 text-center md:text-left">
-              <h2 className="text-2xl font-bold text-gray-800">{user?.name}</h2>
+              <h2 className="text-2xl font-bold text-gray-800">{user?.first_name}</h2>
               <p className="text-indigo-500">{user?.email}</p>
               <div className="mt-4">
                 {isEditing ? (

@@ -64,6 +64,11 @@ export const queryStyles = {
     approvedBadge: "bg-green-50 text-green-600 px-2 py-0.5 rounded-full",
     pendingBadge: "bg-yellow-50 text-yellow-600 px-2 py-0.5 rounded-full",
     responseFlaggedBadge: "bg-red-50 text-red-500 px-2 py-0.5 rounded-full",
+
+    approveDisabledButton: "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50",
+    approvalContainer: "flex items-center gap-2",
+    verifiedIconWrapper: "ml-2",
+    verifiedIcon: "text-green-500",
     
     // Metrics and voting
     metricsWrapper: "flex items-center justify-between",

@@ -1,6 +1,7 @@
 import CreateResponse from "../../Response/components/CreateResponse";
 import { useQueryContainer } from "../container/ViewQueryLogic"; // Import the container hook
-import { queryStyles, cx } from "../container/queryStyles"; // Import styles
+import { queryStyles, cx } from "../../Shared/components/Styles"; // Import styles
+import { CheckCircleIcon } from 'lucide-react';
 
 const ViewQuery = () => {
   // Use the container hook to get all the logic and state
@@ -206,8 +207,15 @@ const ViewQuery = () => {
                         
                         {/* Status and metrics */}
                         <div className={queryStyles.responseStatusWrapper}>
-                          {response.approval ? (
+                          {/* {response.approval ? (
                             <span className={queryStyles.approvedBadge}>Approved</span>
+                          ) : (
+                            <span className={queryStyles.pendingBadge}>Pending</span>
+                          )} */}
+                          {response.approval ? (
+                            <span className={queryStyles.approvedBadge}>
+                              Approved
+                            </span>
                           ) : (
                             <span className={queryStyles.pendingBadge}>Pending</span>
                           )}
@@ -235,18 +243,38 @@ const ViewQuery = () => {
                           </div>
                           
                           <div className={queryStyles.actionsGroup}>
-                            {/* Show approval button for query owner */}
-                            {canApproveResponses && (
-                              <button
-                                onClick={() => handleToggleApproval(response.id)}
-                                className={cx(
-                                  queryStyles.approveButton,
-                                  response.approval ? queryStyles.approveActiveButton : queryStyles.approvePendingButton
-                                )}
-                              >
-                                {response.approval ? 'Unapprove' : 'Approve'}
-                              </button>
+                          {canApproveResponses && (
+                          <button
+                            onClick={() => handleToggleApproval(response.id)}
+                            disabled={response.flagged} // Disable when response is flagged
+                            className={cx(
+                              queryStyles.approveButton,
+                              response.flagged 
+                                ? queryStyles.approveDisabledButton 
+                                : (response.approval 
+                                    ? queryStyles.approveActiveButton 
+                                    : queryStyles.approvePendingButton)
                             )}
+                          >
+                            {response.approval ? 'Unapprove' : 'Approve'}
+                          </button>
+                        )}
+
+                        {/* Response status section */}
+                        {response.approval ? (
+                          <span className={queryStyles.approvedBadge}>
+                            Approved
+                            {/* Verified icon only appears when approval is being actively set */}
+                            {/* This would require tracking the most recent approval action */}
+                            <CheckCircleIcon 
+                              className={queryStyles.verifiedIcon} 
+                              color="#2ecc71" 
+                              size={16} 
+                            />
+                          </span>
+                        ) : (
+                          <span className={queryStyles.pendingBadge}>Pending</span>
+                        )}
                             
                             <button
                               onClick={() => handleUpvote(response.id)}

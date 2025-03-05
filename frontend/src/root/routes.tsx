@@ -11,6 +11,7 @@ import ViewQuery from "../features/Query/components/ViewQuery";
 import Query from "../features/Query/components/Query";
 import Help from "../features/Home/components/Help";
 import ContactUs from "../features/Home/components/ContactUs";
+import PendingResponse from "../features/Response/components/PendingResponse";
 
 
 export const router = createBrowserRouter([
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
           {
             path: ":queryId", // `/queries/:queryId`
             element: <ViewQuery />,
+          },
+          {
+            path: "pending", // `/queries/pending
+            element: <PendingResponse />,
           },
           
         ],

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { useNavigate } from "react-router-dom";
 
+
 const CreateResponse = ({ queryId }) => {
   const navigate = useNavigate();
   const loggedInUserId = useSelector((state: RootState) => state.auth.user?.id);

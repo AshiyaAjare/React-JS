@@ -93,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
                   <Link to="/queries/create" className="block text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 rounded-lg px-4 py-2 transition-colors">
                     Create New Query
                   </Link>
-                  <Link to="/queries/user-responses" className="block text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 rounded-lg px-4 py-2 transition-colors">
+                  <Link to="/queries/pending" className="block text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 rounded-lg px-4 py-2 transition-colors">
                     Pending Responses
                   </Link>
                 </div>
