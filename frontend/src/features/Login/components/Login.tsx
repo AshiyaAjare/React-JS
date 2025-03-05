@@ -1,26 +1,32 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import Navbar from '../../Shared/components/Navbar';
+// import Navbar from '../../Shared/components/Navbar';
 import Footer from '../../Shared/components/Footer';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as Yup from 'yup';
 
 interface LoginProps {
-  validationSchema: any;
+  validationSchema: Yup.ObjectSchema<{
+    email: string;
+    password: string;
+  }>
   isLoading: boolean;
-  onSubmit: (values: { email: string; password: string }, formikHelpers: { setErrors: (errors: any) => void }) => Promise<void>;
+  onSubmit: (
+    values: { email: string; password: string },
+    formikHelpers: { setErrors: (errors: Record<string, string>) => void }
+  ) => Promise<void>;  
 }
 
 const Login: React.FC<LoginProps> = ({ validationSchema, onSubmit, isLoading }) => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      {/* <Navbar /> */}
       <ToastContainer style={{ fontSize: "14px", zIndex: "1000"}} />
       
       <div className="flex-grow flex items-center justify-center bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 px-6 py-20 relative overflow-hidden">
         {/* Decorative circles similar to About section */}
-        <div className="absolute top-0 left-0 w-64 h-64 bg-purple-200 rounded-full opacity-20 -ml-32 -mt-32"></div>
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-pink-100 rounded-full opacity-20 -mr-40 -mb-40"></div>
+
         
         <div className="bg-white shadow-xl rounded-2xl overflow-hidden max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 relative z-10">
           {/* Left - Login Form */}

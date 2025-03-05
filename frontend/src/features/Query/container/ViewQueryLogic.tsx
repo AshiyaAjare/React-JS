@@ -4,6 +4,7 @@ import { useUpvoteResponseMutation, useDownvoteResponseMutation, useDeleteRespon
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { useState, useEffect } from "react";
+import { Query, Response, Tag, User } from '../types'; 
 
 export const useQueryContainer = () => {
   const { queryId } = useParams();
@@ -36,7 +37,7 @@ export const useQueryContainer = () => {
   useEffect(() => {
     if (query?.responses && loggedInUserId) {
       const initialVotes: {[responseId: number]: 'upvote' | 'downvote' | null} = {};  
-      query.responses.forEach((response: any) => {
+      query.responses.forEach((response: Response) => {
         const savedVote = localStorage.getItem(`vote-${loggedInUserId}-${response.id}`);
         initialVotes[response.id] = savedVote as 'upvote' | 'downvote' | null;
       });
@@ -107,13 +108,13 @@ export const useQueryContainer = () => {
     }
   };
 
-  const handleEditResponse = (response: any) => {
+  const handleEditResponse = (response: Response) => {
     setEditingResponseId(response.id);
     setEditedContent(response.content);
     setIsEditing(true);
   };
 
-  const handleEditQuery = (query: any) => {
+  const handleEditQuery = (query: Query) => {
     setEditingQueryId(query.id);
     setEditedContent(query.content);
     setIsEditing(true);

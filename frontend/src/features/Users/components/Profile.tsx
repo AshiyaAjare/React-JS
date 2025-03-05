@@ -124,7 +124,7 @@ const Profile: React.FC = () => {
               />
 
               </div>
-              <div className="absolute -bottom-2 -right-2 bg-pink-200 h-8 w-8 rounded-full opacity-60 animate-pulse"></div>
+              
             </div>
 
             <div className="md:flex-1 text-center md:text-left">

@@ -1,7 +1,21 @@
 import React from 'react';
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../../app/authSlice";
 import { Link } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch logout action to clear auth state
+    localStorage.removeItem("token"); // Remove JWT token
+    navigate("/login"); // Redirect to login page
+  };
+
+
   return (
     <div className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 shadow-md z-10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
@@ -17,9 +31,13 @@ const Navbar = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Link to="/dashboard" className="bg-white text-indigo-400 font-medium px-4 py-2 rounded-lg shadow-sm border border-indigo-100 hover:bg-gray-50 transition duration-300">
-              Dashboard
-            </Link>
+            <button 
+                onClick={handleLogout} 
+                className="flex items-center text-gray-600 hover:bg-pink-100 hover:text-pink-700 rounded-lg px-4 py-3 transition-colors group"
+              >
+              <LogOut size={20} className="mr-3 text-pink-400 group-hover:text-pink-600" />
+              <span className="font-medium">Logout</span>
+            </button>
           </div>
         </div>
       </div>

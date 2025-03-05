@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "../../../app/store";
+
 
 
 // Define a TypeScript interface for the user data
@@ -19,7 +21,7 @@ export const userAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api/v1",
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as any).auth.token; // Assuming you store auth in Redux
+      const token = (getState() as RootState).auth.token; // Assuming you store auth in Redux
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useGetQueriesQuery } from "../api/queryApi";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { SerializedError } from "@reduxjs/toolkit";
 
 export interface QueryData {
   id: string;
@@ -16,7 +18,7 @@ export interface QueryLogicProps {
   children: (props: {
     data: QueryData[] | undefined;
     currentQueries: QueryData[];
-    error: any;
+    error: FetchBaseQueryError | SerializedError | undefined;
     isLoading: boolean;
     currentPage: number;
     totalPages: number;
@@ -27,9 +29,8 @@ export interface QueryLogicProps {
 }
 
 const QueryLogic: React.FC<QueryLogicProps> = ({ children }) => {
-  console.log("QueryLogic container is initializing"); // Debugging
+  console.log("QueryLogic container is initializing");
   const { data, error, isLoading } = useGetQueriesQuery();
-  console.log("API Data:", data); // Debugging
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +58,7 @@ const QueryLogic: React.FC<QueryLogicProps> = ({ children }) => {
     totalPages,
     indexOfFirstQuery,
     indexOfLastQuery,
-    goToPage
+    goToPage,
   });
 };
 

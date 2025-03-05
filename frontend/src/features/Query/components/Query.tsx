@@ -74,28 +74,9 @@ const Query: React.FC = () => {
           <div className="max-w-5xl mx-auto p-6 bg-white rounded-xl shadow-lg border border-indigo-50">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-800">All Queries</h2>
-              <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mr-2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                New Query
-              </button>
             </div>
             
             <div className="bg-gray-50 p-4 rounded-lg mb-6">
-              {/* <div className="flex items-center mb-3">
-                <input 
-                  type="text" 
-                  placeholder="Filter queries..." 
-                  className="flex-grow px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent"
-                  value={filterText}
-                  onChange={(e) => setFilterText(e.target.value)}
-                />
-                <button className="ml-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors">
-                  Filter
-                </button>
-              </div> */}
-              
               {/* Tag filtering section */}
               {uniqueTags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">

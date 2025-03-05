@@ -1,23 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  
+}
 
 interface AuthState {
   token: string | null;
-  user: any | null; 
+  user: User | null;
 }
 
 const initialState: AuthState = {
   token: localStorage.getItem("token") || null,
-  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null,
+  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) as User : null,
 };
-// const loggedInUserId = useSelector((state: RootState) => state.auth.user?.id);
-
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAuth: (state, action: PayloadAction<{ token: string; user: any }>) => {
+    setAuth: (state, action: PayloadAction<{ token: string; user: User }>) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
       localStorage.setItem("token", action.payload.token);
