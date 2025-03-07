@@ -156,11 +156,11 @@ const Query: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <Link to={`/queries/${query.id}`} className="ml-4">
+                    {/* <Link to={`/queries/${query.id}`} className="ml-4">
                       <button className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-lg transition-colors border border-gray-200 hover:border-indigo-200">
                         View
                       </button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </li>
               ))}

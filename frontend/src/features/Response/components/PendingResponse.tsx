@@ -7,15 +7,12 @@ const Responses = () => {
   const { responses: responseData, currentUser, isLoading, error } = useResponsesContainer();
   const [updateResponseStatus] = useUpdateResponseStatusMutation();
   
-  // Search and selection states
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedResponses, setSelectedResponses] = useState<number[]>([]);
 
-  // Type-safe role check
-  const isAdmin = currentUser && currentUser.role === 'moderator_user';
+  const isAdmin = currentUser && currentUser.role === 'moderator';
   const responses = responseData?.responses ?? [];
 
-  // Handle response status update
   const handleStatusUpdate = (response: Response, field: keyof Response) => {
     if (!isAdmin) return;
 
@@ -29,7 +26,6 @@ const Responses = () => {
     });
   };
 
-  // Bulk status update
   const handleBulkStatusUpdate = (field: 'approval' | 'flagged') => {
     if (!isAdmin) return;
 
@@ -43,11 +39,9 @@ const Responses = () => {
       }
     });
 
-    // Clear selection after bulk update
     setSelectedResponses([]);
   };
 
-  // Toggle response selection
   const toggleResponseSelection = (responseId: number) => {
     setSelectedResponses(prev => 
       prev.includes(responseId)
@@ -56,13 +50,11 @@ const Responses = () => {
     );
   };
 
-  // Filtered and searched responses
   const filteredResponses = useMemo(() => {
     if (!searchTerm) return responses;
 
     const lowercaseSearch = searchTerm.toLowerCase();
     return responses.filter(response => 
-      // Search across multiple fields
       response.query?.title.toLowerCase().includes(lowercaseSearch) ||
       response.content.toLowerCase().includes(lowercaseSearch) ||
       response.user?.first_name.toLowerCase().includes(lowercaseSearch) ||
@@ -71,7 +63,6 @@ const Responses = () => {
     );
   }, [responses, searchTerm]);
 
-  // If user is not an admin, show "No Responses"
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center">
@@ -80,99 +71,108 @@ const Responses = () => {
     );
   }
 
-  // Loading state
-  if (isLoading) return <p className="text-gray-600">Loading...</p>;
+  if (isLoading) return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="animate-pulse text-indigo-500 text-xl">Loading...</div>
+    </div>
+  );
   
-  // Error state
-  if (error) return <p className="text-red-500">Error fetching responses</p>;
+  if (error) return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center">
+      <p className="text-red-500 text-xl">Error fetching responses</p>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-8">
-      <h2 className="text-2xl font-bold text-indigo-500 mb-6">Responses</h2>
-      
-      {/* Search Input */}
-      <div className="mb-6 flex items-center space-x-4">
-        <input 
-          type="text"
-          placeholder="Search responses..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-grow p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-extrabold text-indigo-600 mb-8 text-center">Response Management</h2>
         
-        {/* Bulk Action Buttons */}
-        {selectedResponses.length > 0 && (
-          <div className="flex space-x-2">
-            <button 
-              onClick={() => handleBulkStatusUpdate('approval')}
-              className="bg-green-200 text-black px-4 py-2 rounded hover:bg-green-600 transition"
-            >
-              Bulk {selectedResponses.length > 1 ? 'Approve' : 'Toggle Approval'}
-            </button>
-            <button 
-              onClick={() => handleBulkStatusUpdate('flagged')}
-              className="bg-yellow-200 text-black px-4 py-2 rounded hover:bg-yellow-600 transition"
-            >
-              Bulk {selectedResponses.length > 1 ? 'Flag' : 'Toggle Flag'}
-            </button>
+        {/* Search Input */}
+        <div className="mb-8 bg-white rounded-xl shadow-md p-6">
+          <div className="flex items-center space-x-4">
+            <input 
+              type="text"
+              placeholder="Search responses..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="flex-grow p-3 border-2 border-indigo-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            />
           </div>
-        )}
-      </div>
-      
-      {filteredResponses?.length === 0 ? (
-        <p className="text-gray-700">No responses found</p>
-      ) : (
-        <ul className="space-y-4">
-          {filteredResponses?.map((response) => (
-            <li 
-              key={response.id} 
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow flex items-center"
-            >
-              {/* Checkbox for selection */}
-              <input 
-                type="checkbox"
-                checked={selectedResponses.includes(response.id)}
-                onChange={() => toggleResponseSelection(response.id)}
-                className="mr-4 h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              
-              <div className="flex-grow grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-gray-700"><strong>Query:</strong> {response.query?.title || "No query available"}</p>
-                  <p className="text-gray-600"><strong>Content:</strong> {response.content || "No content available"}</p>
-                  <p className="text-gray-600"><strong>User:</strong> {response.user ? `${response.user.first_name} ${response.user.last_name}` : "Unknown User"}</p>
+          {selectedResponses.length > 0 && (
+                    <div className="flex flex-col space-y-2 w-60">
+                      <button 
+                        onClick={() => handleBulkStatusUpdate('approval')}
+                        className="mt-2 bg-green-100 text-green-700 px-3 py-2 rounded-lg text-xs hover:bg-green-200 transition"
+                      >
+                        Bulk {selectedResponses.length > 1 ? 'Approve' : 'Toggle'}
+                      </button>
+                      <button 
+                        onClick={() => handleBulkStatusUpdate('flagged')}
+                        className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-lg text-xs hover:bg-yellow-200 transition"
+                      >
+                        Bulk {selectedResponses.length > 1 ? 'Flag' : 'Toggle'}
+                      </button>
+                    </div>
+                  )}
+        </div>
+        
+        {filteredResponses?.length === 0 ? (
+          <div className="text-center bg-white rounded-xl shadow-md p-8">
+            <p className="text-gray-500 text-lg">No responses found</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {filteredResponses?.map((response) => (
+              //{():()}
+              <div 
+                key={response.id} 
+                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 flex items-center"
+              >
+                {/* Checkbox for selection */}
+                <input 
+                  type="checkbox"
+                  checked={selectedResponses.includes(response.id)}
+                  onChange={() => toggleResponseSelection(response.id)}
+                  className="mr-4 h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                
+                {/* Main Content */}
+                <div className="flex-grow">
+                  <p className="text-indigo-700 font-semibold text-lg truncate mb-1">
+                    {response.user ? `${response.user.first_name} ${response.user.last_name}` : "Unknown User"}
+                  </p>
+                  <p className="text-gray-600 text-sm line-clamp-2 mb-2">
+                    {response.content || "No content available"}
+                  </p>
+                  <p className="text-gray-500 text-xs">
+                    {response.query?.title || "No query available"}
+                  </p>
                 </div>
-                <div className="space-y-2">
-                  {/* Clickable status toggles */}
+
+                {/* Action Buttons */}
+                <div className="flex flex-col space-y-2 ml-4">
+                  
+                  
+                  {/* Status Indicators */}
                   <div 
                     onClick={() => handleStatusUpdate(response, 'approval')}
-                    className={`cursor-pointer p-2 w-40 rounded ${response.approval ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}
+                    className={`cursor-pointer px-3 py-1 rounded-lg text-center text-xs transition ${response.approval ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
                   >
-                    <strong>Approval:</strong> {response.approval ? "Yes" : "No"}
+                    {response.approval ? "Approved" : "Not Approved"}
                   </div>
                   <div 
                     onClick={() => handleStatusUpdate(response, 'flagged')}
-                    className={`cursor-pointer p-2 w-40 rounded ${response.flagged ? 'bg-yellow-100 text-yellow-500' : 'bg-blue-100 text-blue-500'}`}
+                    className={`cursor-pointer px-3 py-1 rounded-lg text-center text-xs transition ${response.flagged ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700'}`}
                   >
-                    <strong>Flagged:</strong> {response.flagged ? "Yes" : "No"}
+                    {response.flagged ? "Flagged" : "Not Flagged"}
                   </div>
                 </div>
               </div>
-              
-              {/* Additional details */}
-              <div className="mt-2 text-md text-gray-600 space-y-1">
-                <p><strong>Created At:</strong> {response.created_at ? new Date(response.created_at).toLocaleString() : "Invalid Date"}</p>
-                <p><strong>Tags:</strong> {response.tags?.map(tag => tag.name).join(", ") || "No tags"}</p>
-                <div className="flex space-x-4">
-                  <span><strong>Upvotes:</strong> {response.upvotes || 0}</span>
-                  <span><strong>Downvotes:</strong> {response.downvotes || 0}</span>
-                  
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -42,17 +42,18 @@ const Profile: React.FC = () => {
   
     const updatedData = new FormData();
     
-    // Wrap fields inside "user"
-    updatedData.append("user[first_name]", formData.first_name);
-    updatedData.append("user[last_name]", formData.last_name);
-    updatedData.append("user[email]", formData.email);
-    updatedData.append("id", user.id);
+    
+    if (formData.first_name, formData.last_name, formData.email){
+      updatedData.append("user[first_name]", formData.first_name);
+      updatedData.append("user[last_name]", formData.last_name);
+      updatedData.append("user[email]", formData.email);
+    }
     
     if (profileImage) {
       updatedData.append("user[profile_image]", profileImage);
     }
 
-    // Only send password if user entered it
+    
     if (formData.password && formData.password.length >= 6) {
       updatedData.append("user[password]", formData.password);
       updatedData.append("user[password_confirmation]", formData.password);
