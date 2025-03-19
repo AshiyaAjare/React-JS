@@ -58,7 +58,7 @@ const ViewQuery = () => {
           <h1 className={queryStyles.title}>{query.title}</h1>
           
           <div className={queryStyles.metaWrapper}>
-            <span className={queryStyles.userBadge}>User: {query.user ? `${query.user.first_name} ${query.user.last_name}` : "Unknown User"}</span>
+            <span className={queryStyles.userBadge}>Created By: {query.user ? `${query.user.first_name} ${query.user.last_name}` : "Unknown User"}</span>
             <span>•</span>
             <span>{new Date(query.created_at).toLocaleString()}</span>
             <span>•</span>
@@ -135,9 +135,9 @@ const ViewQuery = () => {
             </div>
           )}
           
-          <div className={queryStyles.timestamp}>
+          {/* <div className={queryStyles.timestamp}>
             Last updated: {new Date(query.updated_at).toLocaleString()}
-          </div>
+          </div> */}
         </div>
 
         {/* Responses Section*/}
@@ -172,7 +172,7 @@ const ViewQuery = () => {
                           {/* User and timestamp */}
                           <div className={queryStyles.responseHeader}>
                             <div className={queryStyles.responseUser}>
-                              User: {response.user ? `${response.user.first_name} ${response.user.last_name}` : "Unknown User"}
+                              Created By: {response.user ? `${response.user.first_name} ${response.user.last_name}` : "Unknown User"}
                             </div>
                             <div className={queryStyles.responseTime}>
                               {new Date(response.created_at).toLocaleString()}

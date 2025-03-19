@@ -14,6 +14,10 @@ const AcceptInvitation = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (password !== passwordConfirmation) {
+      alert("Passwords do not match");
+      return;
+    }
     handleAcceptInvitation(email, token, password, passwordConfirmation);
   };
 
