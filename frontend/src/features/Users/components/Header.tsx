@@ -1,5 +1,6 @@
 import React from "react";
-import { Bell, Menu, Search } from "lucide-react";
+import { BadgeHelp, Menu, House} from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -26,12 +27,14 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
           </div> */}
         </div>
 
-        {/* <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
           <button className="text-gray-500 hover:text-gray-700 relative">
-            <Bell size={20} />
-            <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+            <Link to="/queries/user-manual"><BadgeHelp size={20} /></Link>
           </button>
-        </div> */}
+          <button className="text-gray-500 hover:text-gray-700 relative">
+            <Link to="/dashboard"><House size={20} /></Link>
+          </button>
+        </div>
       </div>
     </header>
   );

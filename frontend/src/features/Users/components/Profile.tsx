@@ -11,6 +11,10 @@ const Profile: React.FC = () => {
     first_name: user?.first_name || "",
     last_name: user?.last_name || "",
     email: user?.email || "",
+    profile_image: user?.profile_image_url || "",
+    password: "",
+    status: user?.status || "",
+    role: user?.role || "",
   });
 
   const [profileImage, setProfileImage] = useState<File | null>(null);

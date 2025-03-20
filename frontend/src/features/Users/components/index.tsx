@@ -25,7 +25,7 @@ const UserDashboard = () => {
           {/* Main content */}
           <div className="relative z-10">
             <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-500 mb-6">
-              Welcome to User Dashboard
+              Dashboard
             </h1>
             
             <Profile />

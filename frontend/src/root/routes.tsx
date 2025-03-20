@@ -12,6 +12,7 @@ import Query from "../features/Query/components/Query";
 import Help from "../features/Home/components/Help";
 import ContactUs from "../features/Home/components/ContactUs";
 import PendingResponse from "../features/Response/components/PendingResponse";
+import UserManualGuide from "../features/Query/components/UserManual";
 
 
 export const router = createBrowserRouter([
@@ -47,17 +48,27 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <ProtectedRoute />, // Protect the dashboard route
+    element: <ProtectedRoute />, 
     children: [
       {
-        index: true, // Makes "/dashboard" load UserDashboard directly
+        index: true, 
         element: <UserDashboard />,
       },
     ],
   },
   {
+    path:"/user-manual",
+    element:<ProtectedRoute />,
+    children:[
+      {
+        index:true,
+        element:<UserManualGuide/>
+      }
+    ]
+  },
+  {
     path: "/queries",
-    element: <ProtectedRoute />, // Protect the dashboard route
+    element: <ProtectedRoute />, 
     children: [
       {
         path: "", // `/queries`
@@ -79,6 +90,10 @@ export const router = createBrowserRouter([
             path: "pending", // `/queries/pending
             element: <PendingResponse />,
           },
+          {
+            path:"user-manual",
+            element:<UserManualGuide/>
+          }
           
         ],
       },
